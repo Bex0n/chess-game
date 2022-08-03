@@ -21,3 +21,5 @@ klasę Rozgrywka w linijkach 9. i 10. w następnujący sposób:
 Player Player1 = new Player("bialy");
 Player Player2 = new Player("czarny");
 ```
+
+Gra nie posiada jeszcze możliwości promocji pionków oraz bicia w przelocie.
