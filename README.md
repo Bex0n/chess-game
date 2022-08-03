@@ -1,11 +1,11 @@
 # Gra w szachy.
-### Projekt został stworzony przy użyciu środowiska Intellij.
+### Projekt został stworzony przy użyciu środowiska Intellij oraz języka Java.
 
 ## Uruchamianie projektu.
 
 Program może zostać skompilowany w środowisku Intellij przy pomocy komendy Run Main. 
 
-Alternatywnie program może zostać skompilowany oraz uruchomiony z wykorzystaniem polecenia
+W systemie linux program może zostać skompilowany oraz uruchomiony z wykorzystaniem polecenia
 ```shell
 chmod +x gra.sh
 ./gra.sh
