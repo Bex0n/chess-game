@@ -1,5 +1,4 @@
 import java.util.List;
-import java.util.Vector;
 
 public class Szachownica {
     private final Figura [][] pola;

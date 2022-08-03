@@ -51,4 +51,14 @@ public abstract class Participant {
         }
         return false;
     }
+
+    public boolean zszachowany(Szachownica szachownica) {
+        return szachownica.szachuje(this.kolorPrzeciwny());
+    }
+
+    public int kolorPrzeciwny() {
+        if(kolor == Figura.kolor_bialy)
+            return Figura.kolor_czarny;
+        return Figura.kolor_bialy;
+    }
 }

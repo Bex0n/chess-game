@@ -14,8 +14,8 @@ public class Hetman extends Figura {
     }
 
     public  List<Pole> mozliweRuchy(int x, int y, Szachownica szachownica) {
-        String kolorNapis = "";
-        if (kolor == 6)
+        String kolorNapis;
+        if (kolor == Figura.kolor_bialy)
             kolorNapis = "bialy";
         else
             kolorNapis = "czarny";

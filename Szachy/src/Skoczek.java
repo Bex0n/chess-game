@@ -14,16 +14,27 @@ public class Skoczek extends Figura {
     }
 
     public  List<Pole> mozliweRuchy(int x, int y, Szachownica szachownica) {
-        List<Pole> ruchy = new Vector<Pole>();
+        List<Pole> mozliwe_ruchy = new Vector<Pole>();
 
         // Możliwe ruchy skoczka.
-        int [] xChange = {2, 2, -2, -2, 1, 1, -1, -1};
-        int [] yChange = {1, -1, 1, -1, 2, -2, 2, -2};
+        int [][] zmiana = {{2, 1},
+                           {2, -1},
+                           {-2, 1},
+                           {-2, -1},
+                           {1, 2},
+                           {1, -2},
+                           {-1, 2},
+                           {-1, -2}};
 
-        for(int i = 0; i < xChange.length; i++)
-            if(szachownica.wSzachownicy(x+xChange[i], y+yChange[i]))
-                if(szachownica.podajPole(x+xChange[i], y+yChange[i]).kolor != kolor)
-                    ruchy.add(new Pole(x+xChange[i], y + yChange[i]));
-        return ruchy;
+        // Dodanie do listy ruchów, jeśli na danym polu nie stoi sojusznicza figura.
+        for(int [] ruch : zmiana) {
+            int docelowy_ruch_x = x + ruch[0];
+            int docelowy_ruch_y = y + ruch[1];
+            if (szachownica.wSzachownicy(docelowy_ruch_x, docelowy_ruch_y))
+                if (szachownica.podajPole(docelowy_ruch_x, docelowy_ruch_y).kolor != kolor)
+                    mozliwe_ruchy.add(new Pole(docelowy_ruch_x, docelowy_ruch_y));
+        }
+
+        return mozliwe_ruchy;
     }
 }

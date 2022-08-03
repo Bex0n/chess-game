@@ -3,6 +3,7 @@ import java.util.*;
 public class Goniec extends Figura {
 
     static int goniecUnicode = 0x2657;
+    static int zasiegRuchu = 8;
 
     public Goniec(String kolor, Pole pole) {
         if (kolor == "czarny");
@@ -16,20 +17,24 @@ public class Goniec extends Figura {
     public  List<Pole> mozliweRuchy(int x, int y, Szachownica szachownica) {
         List<Pole> ruchy = new Vector<Pole>();
 
-        PustePole pusty = new PustePole(new Pole(0, 0));
+        // Kierunki w których może poruszać się wieża.
+        int [][] zmiana = {{1, 1},
+                           {-1, 1},
+                           {1, -1},
+                           {-1, -1}};
 
-        int [] xChange = {1, -1, 1, -1};
-        int [] yChange = {1, 1, -1, -1};
-
-        for (int i = 0; i < 4; i++)
-            for (int j = 1; j <= 8; j++) {
-                int sprawdzane_pole_x = x + xChange[i] * j;
-                int sprawdzane_pole_y = y + yChange[i] * j;
-                if (szachownica.wSzachownicy(sprawdzane_pole_x, sprawdzane_pole_y)) {
-                    if (szachownica.podajPole(sprawdzane_pole_x, sprawdzane_pole_y).kolor == kolor)
+        // Dodanie do listy ruchów, które są dostępne dla wieży,
+        for (int [] ruch : zmiana)
+            for (int zasieg = 1; zasieg <= zasiegRuchu; zasieg++) {
+                int docelowy_ruch_x = x + ruch[0] * zasieg;
+                int docelowy_ruch_y = y + ruch[1] * zasieg;
+                if (szachownica.wSzachownicy(docelowy_ruch_x, docelowy_ruch_y)) {
+                    // Sprawdzenie, czy została napotkana sojusznicza figura.
+                    if (szachownica.podajPole(docelowy_ruch_x, docelowy_ruch_y).kolor == kolor)
                         break;
-                    ruchy.add(new Pole(sprawdzane_pole_x, sprawdzane_pole_y));
-                    if (szachownica.podajPole(sprawdzane_pole_x, sprawdzane_pole_y).kolor != pusty.kolor)
+                    ruchy.add(new Pole(docelowy_ruch_x, docelowy_ruch_y));
+                    // Sprawdzenie, czy została napotkana wroga figura.
+                    if (szachownica.podajPole(docelowy_ruch_x, docelowy_ruch_y).kolor != PustePole.podajKolor())
                         break;
                 }
             }

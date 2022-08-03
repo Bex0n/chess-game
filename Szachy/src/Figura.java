@@ -7,6 +7,8 @@ public abstract class Figura {
     protected int kolor;
     // Pole, na którym figura się znajduje.
     protected Pole pole;
+    public static int kolor_bialy = 6;
+    public static int kolor_czarny = 0;
 
     // Zwraca listę pól na które można stanąć figura na szachownicy.
     public  abstract List <Pole> mozliweRuchy(int x, int y, Szachownica szachownica);

@@ -9,42 +9,22 @@ public class Bot extends Participant {
     }
 
     public boolean wykonajRuch(Szachownica szachownica) {
-
-        // Szachowanie
-        int kolorPrzeciwny = 0;
+        // Szachowanie.
+        int kolor_przeciwny = 0;
         if (kolor == 0)
-            kolorPrzeciwny = 6;
+            kolor_przeciwny = 6;
 
-        boolean szached = szachownica.szachuje(kolorPrzeciwny);
-        if(szached) {
-            int ratujaceRuchy = 0;
-            for (int i = 0; i < szachownica.liczbaWierszy(); i++)
-                for (int j = 0; j < szachownica.liczbaKolumn(); j++)
-                    if (szachownica.podajPole(i, j).kolor == kolor) {
-                        List<Pole> dostepneRuchy = szachownica.podajPole(i, j).mozliweRuchy(i, j, szachownica);
-                        for (int k = 0; k < dostepneRuchy.size(); k++) {
-                            Figura oldPoleFirst = szachownica.podajPole(i, j);
-                            Figura oldPoleSecond = szachownica.podajPole(dostepneRuchy.get(k).getWiersz(), dostepneRuchy.get(k).getKolumna());
-                            szachownica.podajPole(i, j).pole = new Pole(dostepneRuchy.get(k).getWiersz(), dostepneRuchy.get(k).getKolumna());
-                            szachownica.ustawPole(dostepneRuchy.get(k).getWiersz(), dostepneRuchy.get(k).getKolumna(), szachownica.podajPole(i, j));
-                            szachownica.ustawPole(i, j, new PustePole(new Pole(i, j)));
-                            if(!szachownica.szachuje(kolorPrzeciwny))
-                                ratujaceRuchy++;
-                            szachownica.ustawPole(dostepneRuchy.get(k).getWiersz(), dostepneRuchy.get(k).getKolumna(), oldPoleSecond);
-                            szachownica.ustawPole(i, j, oldPoleFirst);
-                            szachownica.podajPole(i, j).pole = new Pole(i, j);
-                        }
-                    }
-            if(ratujaceRuchy == 0) {
-                return true;
-            }
-        }
-        // Koniec szachowania
+        if(this.zmatowany(szachownica))
+            return true;
 
+        znajdzOrazRuszFigure(szachownica, kolor_przeciwny);
+        return true;
+    }
+
+    public void znajdzOrazRuszFigure(Szachownica szachownica, int kolor_przeciwny) {
         Random rand = new Random();
         int x = 0;
         int y = 0;
-        int counter = 0;
 
         while(true) {
             boolean found = false;
@@ -59,7 +39,7 @@ public class Bot extends Participant {
                         szachownica.podajPole(x, y).pole = new Pole(dostepneRuchy.get(k).getWiersz(), dostepneRuchy.get(k).getKolumna());
                         szachownica.ustawPole(dostepneRuchy.get(k).getWiersz(), dostepneRuchy.get(k).getKolumna(), szachownica.podajPole(x, y));
                         szachownica.ustawPole(x, y, new PustePole(new Pole(x, y)));
-                        if (!szachownica.szachuje(kolorPrzeciwny))
+                        if (!szachownica.szachuje(kolor_przeciwny))
                             found = true;
                         szachownica.ustawPole(dostepneRuchy.get(k).getWiersz(), dostepneRuchy.get(k).getKolumna(), oldPoleSecond);
                         szachownica.ustawPole(x, y, oldPoleFirst);
@@ -69,12 +49,13 @@ public class Bot extends Participant {
             }
             if (found)
                 break;
-            if (counter > 100000)
-                return true;
-            counter++;
         }
-        List<Pole> dostepneRuchy = szachownica.podajPole(x, y).mozliweRuchy(x, y, szachownica);
+        ruszFigure(szachownica, x, y, szachownica.podajPole(x, y).mozliweRuchy(x, y, szachownica), kolor_przeciwny);
+        return;
+    }
 
+    public boolean ruszFigure(Szachownica szachownica, int x, int y, List<Pole> dostepneRuchy, int kolor_przeciwny) {
+        Random rand = new Random();
         while(true) {
             int n = rand.nextInt(dostepneRuchy.size());
 
@@ -83,7 +64,7 @@ public class Bot extends Participant {
             szachownica.podajPole(x, y).pole = new Pole(dostepneRuchy.get(n).getWiersz(), dostepneRuchy.get(n).getKolumna());
             szachownica.ustawPole(dostepneRuchy.get(n).getWiersz(), dostepneRuchy.get(n).getKolumna(), szachownica.podajPole(x, y));
             szachownica.ustawPole(x, y, new PustePole(new Pole(x, y)));
-            if (!szachownica.szachuje(kolorPrzeciwny)) {
+            if (!szachownica.szachuje(kolor_przeciwny)) {
                 char literaPoczatkowa = (char) ((int) ('A') + y);
                 char liczbaPoczatkowa = (char) ((int) ('0') + szachownica.liczbaWierszy() - x);
                 char literaKoncowa = (char) ((int) ('A') + dostepneRuchy.get(n).getKolumna());
@@ -103,4 +84,6 @@ public class Bot extends Participant {
             }
         }
     }
+
+
 }
