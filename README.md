@@ -1,5 +1,5 @@
 # Gra w szachy.
-# Projekt został stworzony przy użyciu środowiska Intellij.
+### Projekt został stworzony przy użyciu środowiska Intellij.
 
 ## Uruchamianie projektu.
 
