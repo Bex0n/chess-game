@@ -7,7 +7,7 @@ public class Main {
             if (args.equals("-players"))
                 players = true;
         }
-        Rozgrywka game = new Rozgrywka(bots, players);
+        Rozgrywka game = new Rozgrywka();
         game.start();
     }
 }
