@@ -1,19 +1,26 @@
 # Gra w szachy.
-### Projekt został stworzony przy użyciu środowiska Intellij oraz języka Java.
+Konsolowa gra w szachy na bazie kodowania znaków w Unicode. Gracz opisuje w terminalu ruch formatem
 
-## Uruchamianie projektu.
+```
+AB CD
+```
 
-Program może zostać skompilowany w środowisku Intellij przy pomocy komendy Run Main. 
+Gdzie AB to pole ruszanej figury (np. B5), a CD to pole miejsca na które figura jest przesuwana (np. B6).
 
-W systemie linux program może zostać skompilowany oraz uruchomiony z wykorzystaniem polecenia
+### Uruchamianie projektu.
+
+Kompilacja:
+
 ```shell
-chmod +x gra.sh
-./gra.sh
+javac -d out/production/Szachy src/*.java
+```
+
+Uruchomienie:
+```shell
+java -classpath out/production/Szachy Main
 ```
 
 # Opis projektu
-
-Ruchy należy podawać w formacie "{pole startowe} {pole końcowe}" np. "A2 A4".
 
 Gra dostępna jest w wersji gracz vs bot, w celu rozgrywki dwóch graczy należy zedytować
 klasę Rozgrywka w linijkach 9. i 10. w następnujący sposób:
