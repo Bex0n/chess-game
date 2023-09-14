@@ -1,30 +1,47 @@
 public class Rozgrywka {
+    // Game parameters
+    private int game_rounds;
 
-    public Rozgrywka() {
+    // Game attributes
+    private Szachownica szachownica;
+    private Participant white;
+    private Participant black;
+
+    public Rozgrywka(String white_player_type, String black_player_type) {
+        szachownica = new Szachownica();
+
+        if (white_player_type.equals("Player"))
+            white = new Player("white");
+        else
+            white  = new Bot("white");
+
+        if (black_player_type.equals("Player"))
+            black = new Player("black");
+        else
+            black = new Bot("black");
+    }
+
+    public void set_rounds(int rounds) {
+        game_rounds = rounds;
     }
 
     void start() {
-        Szachownica szachownica = new Szachownica();
-
-        Player Player1 = new Player("bialy");
-        Bot Player2 = new Bot("czarny");
-
-        for (int i = 1; i <= 40; i++) {
-            System.out.println("Tura " + i + ":");
-            if(Player1.zmatowany(szachownica)) {
+        for (int round = 1; round <= game_rounds; round++) {
+            System.out.println("Tura " + round + ":");
+            if(white.zmatowany(szachownica)) {
                 System.out.println("Mat!");
                 System.out.println("Wygrywa Gracz2!");
                 return;
             }
-            Player1.pokazSzachownice(szachownica);
-            while(!Player1.wykonajRuch(szachownica));
-            if(Player2.zmatowany(szachownica)) {
+            white.pokazSzachownice(szachownica);
+            while(!white.wykonajRuch(szachownica));
+            if(black.zmatowany(szachownica)) {
                 System.out.println("Mat!");
                 System.out.println("Wygrywa Gracz1");
                 return;
             }
-            Player1.pokazSzachownice(szachownica);
-            Player2.wykonajRuch(szachownica);
+            white.pokazSzachownice(szachownica);
+            black.wykonajRuch(szachownica);
         }
         System.out.println("Remis!");
         return;

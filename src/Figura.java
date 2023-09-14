@@ -14,7 +14,15 @@ public abstract class Figura {
     public  abstract List <Pole> mozliweRuchy(int x, int y, Szachownica szachownica);
 
     // Zwraca numer unicode figury.
-    int getCode() {
+    public int getCode() {
         return unicode + kolor;
+    }
+
+    public Pole getPole() {
+        return pole;
+    }
+
+    public void setPole(int x, int y) {
+        pole = new Pole(x, y);
     }
 }

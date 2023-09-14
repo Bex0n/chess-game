@@ -57,6 +57,7 @@ public class Szachownica {
 
     public void ustawPole(int x, int y, Figura figura) {
         pola[x][y] = figura;
+        figura.setPole(x, y);
     }
 
     public int liczbaWierszy() {
@@ -68,8 +69,7 @@ public class Szachownica {
     }
 
 
-    public boolean szachuje(int kolor) {
-
+    public Pole pozycjaWrogiegoKrola(int kolor) {
         String kolorPrzeciwny = "czarny";
         if (kolor == 0)
             kolorPrzeciwny = "bialy";
@@ -78,14 +78,21 @@ public class Szachownica {
         for (int i = 0; i < this.liczbaWierszy(); i++)
             for (int j = 0; j < this.liczbaKolumn(); j++)
                 if (this.podajPole(i, j).getCode() == wrogiKrol.getCode())
-                    for (int k = 0; k < this.liczbaWierszy(); k++)
-                        for (int l = 0; l < this.liczbaKolumn(); l++)
-                            if (this.podajPole(k, l).kolor == kolor) {
-                                List<Pole> ruchy = this.podajPole(k, l).mozliweRuchy(k, l, this);
-                                for (int m = 0; m < ruchy.size(); m++)
-                                    if (ruchy.get(m).getWiersz() == i && ruchy.get(m).getKolumna() == j)
-                                        return true;
-                            }
+                    return this.podajPole(i, j).getPole();
+        return new Pole(-1, -1);
+    }
+
+    public boolean szachuje(int kolor) {
+        Pole wrogi_krol = pozycjaWrogiegoKrola(kolor);
+
+        for (int i = 0; i < this.liczbaWierszy(); i++)
+            for (int j = 0; j < this.liczbaKolumn(); j++)
+                if (this.podajPole(i, j).kolor == kolor) {
+                    List<Pole> ruchy = this.podajPole(i, j).mozliweRuchy(i, j, this);
+                    for (Pole ruch : ruchy)
+                        if (ruch.equals(wrogi_krol))
+                            return true;
+                }
         return false;
     }
 

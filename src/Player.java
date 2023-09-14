@@ -2,9 +2,9 @@ import java.util.*;
 
 public class Player extends Participant {
     public Player(String kolor) {
-        if (kolor == "czarny")
+        if (kolor == "black")
             this.kolor = 0;
-        if (kolor == "bialy")
+        if (kolor == "white")
             this.kolor = 6;
     }
 

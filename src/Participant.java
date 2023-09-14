@@ -29,8 +29,7 @@ public abstract class Participant {
         if (kolor == 0)
             kolorPrzeciwny = 6;
 
-        boolean szached = szachownica.szachuje(kolorPrzeciwny);
-        if(szached) {
+        if(szachownica.szachuje(kolorPrzeciwny)) {
             int ratujaceRuchy = 0;
             for (int i = 0; i < szachownica.liczbaWierszy(); i++)
                 for (int j = 0; j < szachownica.liczbaKolumn(); j++)
@@ -41,8 +40,11 @@ public abstract class Participant {
                             Figura oldPoleSecond = szachownica.podajPole(dostepneRuchy.get(k).getWiersz(), dostepneRuchy.get(k).getKolumna());
                             szachownica.ustawPole(dostepneRuchy.get(k).getWiersz(), dostepneRuchy.get(k).getKolumna(), szachownica.podajPole(i, j));
                             szachownica.ustawPole(i, j, new PustePole(new Pole(i, j)));
-                            if (!szachownica.szachuje(kolorPrzeciwny))
+                            if (!szachownica.szachuje(kolorPrzeciwny)) {
+                                System.out.println("Figura z pozycji " + i + " " + j);
+                                System.out.println("na pozycje " + dostepneRuchy.get(k).getWiersz() + " " + dostepneRuchy.get(k).getKolumna());
                                 ratujaceRuchy++;
+                            }
                             szachownica.ustawPole(dostepneRuchy.get(k).getWiersz(), dostepneRuchy.get(k).getKolumna(), oldPoleSecond);
                             szachownica.ustawPole(i, j, oldPoleFirst);
                         }

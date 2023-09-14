@@ -2,9 +2,9 @@ import java.util.*;
 
 public class Bot extends Participant {
     public Bot(String kolor) {
-        if (kolor == "bialy")
+        if (kolor == "white")
             this.kolor = 6;
-        if (kolor == "czarny")
+        if (kolor == "black")
             this.kolor = 0;
     }
 

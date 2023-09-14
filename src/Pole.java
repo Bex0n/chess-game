@@ -22,4 +22,8 @@ public class Pole {
     public void setKolumna(int x) {
         this.kolumna = x;
     }
+
+    public boolean equals(Pole other) {
+        return wiersz == other.wiersz && kolumna == other.kolumna;
+    }
 }
